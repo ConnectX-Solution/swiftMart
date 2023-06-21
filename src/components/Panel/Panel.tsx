@@ -2,15 +2,6 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { DI, DIProps } from "../../Core";
 import ScrollToTop from "./ScrollToTop";
-
-// import {
-//     Button,
-//     Card,
-//     FlexLayout,
-//     Notification as Note,
-//     Select,
-//     TextStyles
-// } from '@cedcommerce/ounce-ui';
 import { StoreDispatcher } from "../..";
 import {
   loginStatus,
@@ -19,10 +10,7 @@ import {
   syncProfileInfo,
   syncServices,
 } from "../../Actions";
-import { capitalizeFirstLetter } from "./Function";
-// import { Menu, SubMenu } from './Panel/Menu';
 
-// import { PlusCircle } from 'react-feather';
 import { PanelLayout } from "../layout";
 import Dashboard from "./Dashboards/Dashboard";
 import Product from "./Products/Product";

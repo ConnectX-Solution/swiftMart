@@ -12,11 +12,6 @@ interface PropsI extends DIProps {
 }
 function App(Props: PropsI): JSX.Element {
   const userId = Props.di.globalState.get(`user_id`);
-  useEffect(() => {
-    //watch internet status
-    // InternetStatus();
-  }, []);
-
   return (
     <>
       <Routes>
@@ -43,51 +38,8 @@ function App(Props: PropsI): JSX.Element {
 
 
       </Routes>
-
-
-      {/* <Routes> 
-          {/* <Route
-              path="/auth"
-              element={
-                <Suspense fallback={<></>}>
-                  <Auth />
-                </Suspense>
-              }>
-              <Route path="*" element={<>NO Page Found 2</>} />
-            </Route>
-            <Route path="/onboarding" element={
-              <Suspense fallback={<></>}>
-                <ProtectedRoutes />
-              </Suspense>
-            }>
-              <Route index element={<NewOnboarding />} />
-
-              <Route path="complete" element={<Completed />} />
-              <Route path="*" element={<>NO Page Found 2</>} />
-            </Route>
-            <Route
-              path="/panel/:uId/*"
-              element={
-                <Suspense fallback={<></>}>
-                  <Panel />
-                </Suspense>
-              }>
-              <Route path="*" element={<>NO Page Found 2</>} />
-            </Route> */}
-      {/* <Route
-              path="/show/message"
-              element={
-                <Suspense fallback={<></>}> */}
-      {/* <ShowMessage /> */}
-      {/* </Suspense>
-              }> */}
-      {/* <Route path="*" element={<>NO Page Found 2</>} />
-            </Route>
-            <Route path="*" element={<Navigate to={'/auth/login'} />} />
-            <Route path="/no-network" element={<NoNetwork />} />
-      </Routes> */}
       <RenderToasts {...Props} />
-      {/* <RenderModal {...Props} /> */}
+
     </>
   );
 }
