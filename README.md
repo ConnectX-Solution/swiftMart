@@ -1,4 +1,4 @@
-# CedCommerce new React app setup
+# eShop Admin Panel
 
 ## Clone App to get started
 
@@ -15,6 +15,3 @@ npm start
 ```
 
 ## About
-
-This is a boiler plate for all global connector solution apps.
-Basically in these we have a common things login module,onboarding module and inside the app we have a dashboard product order profile and FAQ

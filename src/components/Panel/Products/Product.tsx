@@ -20,13 +20,8 @@ import {
   VStack,
   Stack,
   Card,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
 } from "@chakra-ui/react";
 import { Table } from "antd";
-import { ChevronRightIcon } from "@chakra-ui/icons";
-import { useLocation } from "react-router-dom";
 
 function Product() {
   const { isOpen, onOpen, onClose } = useDisclosure();
