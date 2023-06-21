@@ -1,26 +1,32 @@
-
-import React, { StrictMode, Suspense, lazy } from 'react';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import React, { StrictMode, Suspense, lazy } from "react";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
 import "./App.css";
+//theme
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 
-import { store } from './Reducers';
+//core
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+
+import { store } from "./Reducers";
 
 export const StoreDispatcher = React.createContext(store.dispatch);
 
 const App = lazy(() => import("./App"));
 const persistor = persistStore(store);
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 const root = createRoot(rootElement!);
 
 root.render(
   <StrictMode>
     <BrowserRouter basename={process.env.route ?? ""}>
       <PersistGate loading={null} persistor={persistor}>
+        0
         <Provider store={store}>
           {/* <StoreDispatcher.Provider value={store.dispatch}> */}
           <Suspense fallback={<>Loading...</>}>
@@ -34,4 +40,3 @@ root.render(
     </BrowserRouter>
   </StrictMode>
 );
-
