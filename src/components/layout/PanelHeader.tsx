@@ -30,11 +30,13 @@ import {
   MdReorder,
 } from "react-icons/md";
 import React from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
 export default function PanelHeader(props: any) {
+  const { uId } = useParams();
+
   const navigate = useNavigate();
   const sidebar = useDisclosure();
   const integrations = useDisclosure();
@@ -119,7 +121,7 @@ export default function PanelHeader(props: any) {
         <NavItem
           icon={MdHome}
           onClick={(e: any) => {
-            navigate(`/panel/${123}/dashboard`, {
+            navigate(`/panel/${uId}/dashboard`, {
               state: { key: "Dashboard" },
             });
           }}
@@ -130,7 +132,7 @@ export default function PanelHeader(props: any) {
         <NavItem
           icon={MdProductionQuantityLimits}
           onClick={(e: any) => {
-            navigate(`/panel/${123}/product`, {
+            navigate(`/panel/${uId}/product`, {
               state: { key: "Product" },
             });
           }}
@@ -141,7 +143,7 @@ export default function PanelHeader(props: any) {
         <NavItem
           icon={MdReorder}
           onClick={(e: any) => {
-            navigate(`/panel/${123}/order`, {
+            navigate(`/panel/${uId}/order`, {
               state: { key: "Order" },
             });
           }}
@@ -189,7 +191,7 @@ export default function PanelHeader(props: any) {
               icon={<FiMenu />}
               size="sm"
             />
-            <Flex px="4" py="5" align="center">
+            <Flex px="4" py="5" align="center" display={{ base: " none ", md: "inline-flex" }}>
               <Text
                 fontSize="2xl"
                 ml="2"
@@ -207,7 +209,7 @@ export default function PanelHeader(props: any) {
                   as={FaBell}
                   cursor="pointer"
                   size={25}
-                  onClick={() => navigate(`/panel/${123}/activities`)}
+                  onClick={() => navigate(`/panel/${uId}/activities`)}
                 />
                 <CFaUserAlt color="gray.300" size={25} />
               </Stack>

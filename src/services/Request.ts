@@ -24,7 +24,7 @@ function getAdditionalParams(StateProps: any) {
     }
 
     return {
-        target_marketplace: btoa(JSON.stringify(params))
+        // target_marketplace: btoa(JSON.stringify(params))
     };
 }
 
@@ -32,21 +32,9 @@ function prepareheaders(
     StateProps: DIredux
 ): {
     Authorization: string;
-    appTag: string;
-    appCode: string;
-    "Ced-Source-Id": string,
-    "Ced-Source-Name": string,
-    "Ced-Target-Id": string,
-    "Ced-Target-Name": string,
 } {
     return {
-        Authorization: 'Bearer ' + globalState.getBearerToken(StateProps)(),
-        appCode: btoa(JSON.stringify(environment.appCode)),
-        appTag: environment.appTag,
-        "Ced-Source-Id": StateProps.current?.source?._id ?? globalState.get(StateProps)('source_id') ?? '',
-        "Ced-Source-Name": StateProps.current?.source?.marketplace ?? '',
-        "Ced-Target-Id": StateProps.current?.target?._id ?? globalState.get(StateProps)('target_id') ?? '',
-        "Ced-Target-Name": StateProps.current?.target?.marketplace ?? '',
+        Authorization: 'Bearer ' + globalState.getBearerToken(StateProps)()
     };
 }
 

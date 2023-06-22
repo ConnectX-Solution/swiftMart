@@ -45,7 +45,7 @@ function Panel(props: PanelProps): JSX.Element {
 
     const shop = props.di.globalState.get(`shop`);
     // myshopify_domain: "gaurav-fb.myshopify.com"
-    props.syncConnectorInfo(props, shop); //Don't add AWAIT DURING PRODUCTION
+    // props.syncConnectorInfo(props, shop); //Don't add AWAIT DURING PRODUCTION
 
     /****  pause for now, if we need profile data on redux level, un-comment it /****/
     // props.syncProfileInfo();

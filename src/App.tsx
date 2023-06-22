@@ -32,41 +32,12 @@ function App(Props: PropsI): JSX.Element {
               <Panel />
             </Suspense>
           }>
-
         </Route>
         <Route path="*" element={<Navigate to={'/auth/login'} />} />
-
-
       </Routes>
-      <RenderToasts {...Props} />
-
     </>
   );
 }
 
-function RenderToasts(props: PropsI): JSX.Element {
-  const { redux } = props;
-  const { showToast } = redux;
-  return (
-    <h1>Toast Message</h1>
-    // <ToastWrapper>
-    //   {Object.keys(showToast).map((key: any) => {
-    //     const toast = showToast[key];
-    //     let type: any = 'success';
-    //     if (toast.error) type = 'error';
-    //     if (toast.warn) type = 'warning';
-    //     return (
-    //       <Toast
-    //         key={key}
-    //         type={type}
-    //         // error={toast.error}
-    //         onDismiss={() => props.hideNotification(key)}
-    //         message={toast.message}
-    //       />
-    //     );
-    //   })}
-    // </ToastWrapper>
-  );
-}
 export default DI(App, { stateNeeded: true, func: { hideNotification } });
 
