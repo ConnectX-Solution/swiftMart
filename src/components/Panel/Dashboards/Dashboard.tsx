@@ -21,11 +21,11 @@ function Dashboard(_props: any) {
 
   const toast = useToast()
 
-  const { GET } = _props.di
+  const { GET, POST } = _props.di
   const [productCount, setProductCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
   const getProductCount = () => {
-    GET("getproduct").then((e: any) => {
+    POST("getproduct").then((e: any) => {
       if (e.success || e.status == 200) {
         setProductCount(e.TotleCount);
       } else {
@@ -39,7 +39,7 @@ function Dashboard(_props: any) {
     })
   }
   const getOrderCount = () => {
-    GET("getOrder").then((e: any) => {
+    POST("getOrder").then((e: any) => {
       if (e.success || e.status == 200) {
         setOrderCount(e.TotleCount);
       } else {
