@@ -15,9 +15,10 @@ import {
 } from "@chakra-ui/react";
 
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { DI } from "../../../Core";
 function Dashboard(_props: any) {
+
   const toast = useToast()
 
   const { GET } = _props.di
@@ -36,7 +37,6 @@ function Dashboard(_props: any) {
         })
       }
     })
-
   }
   const getOrderCount = () => {
     GET("getOrder").then((e: any) => {
