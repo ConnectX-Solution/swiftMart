@@ -292,7 +292,7 @@ function Product(_props: DIProps) {
                   </Drawer>
                   <Box>
                     <Button colorScheme="blue" onClick={() => {
-                      navigate(`/panel/${uId}/dashboard`);
+                      navigate(`/panel/${uId}/product/product-create`);
                     }}>Create Product</Button>
                   </Box>
                 </HStack>
