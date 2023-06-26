@@ -15,6 +15,11 @@ import { PanelLayout } from "../layout";
 import Dashboard from "./Dashboards/Dashboard";
 import Product from "./Products/Product";
 import Order from "./Orders/Order";
+import Myaccount from "./Myaccount/Myaccount";
+import CreateProduct from "./Products/components/CreateProduct";
+import EditProduct from "./Products/components/EditProduct";
+import ViewOrder from "./Orders/components/ViewOrder";
+import Notification from "./Notification/Notification";
 export interface PanelProps extends DIProps {
   name?: string;
   syncNecessaryInfo: () => void;
@@ -45,7 +50,7 @@ function Panel(props: PanelProps): JSX.Element {
 
     const shop = props.di.globalState.get(`shop`);
     // myshopify_domain: "gaurav-fb.myshopify.com"
-    props.syncConnectorInfo(props, shop); //Don't add AWAIT DURING PRODUCTION
+    // props.syncConnectorInfo(props, shop); //Don't add AWAIT DURING PRODUCTION
 
     /****  pause for now, if we need profile data on redux level, un-comment it /****/
     // props.syncProfileInfo();
@@ -63,18 +68,14 @@ function Panel(props: PanelProps): JSX.Element {
           <Routes>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="product/*" element={<Product />} />
-            <Route
-              path="product/product-view"
-              element={<h1>Product-view</h1>}
-            />
-            <Route
-              path="product/product-edit"
-              element={<h1>Product-edit</h1>}
-            />
-            <Route path="order/*" element={<Order />} />
-            <Route path="order/order-view" element={<h1>Order view</h1>} />
+            <Route path="product/createproduct" element={<CreateProduct />} />
+            <Route path="product/editproduct" element={<EditProduct />} />
 
-            <Route path="activities" element={<h1>activities Section</h1>} />
+            <Route path="order/*" element={<Order />} />
+            <Route path="order/vieworder" element={<ViewOrder />} />
+
+            <Route path="notification" element={<Notification />} />
+            <Route path="myaccount" element={<Myaccount />} />
 
             <Route path="*" element={<Navigate to="dashboard" />} />
           </Routes>

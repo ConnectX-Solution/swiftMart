@@ -1,181 +1,257 @@
-import React from "react";
-import { FaSearch } from "react-icons/fa";
 import {
-  Heading,
   Button,
-  Flex,
-  Box,
-  HStack,
-  InputGroup,
-  InputLeftElement,
-  Input,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  DrawerBody,
-  DrawerFooter,
-  useDisclosure,
-  VStack,
-  Stack,
   Card,
-} from "@chakra-ui/react";
+  Col,
+  DatePicker,
+  Drawer,
+  Form,
+  Input,
+  Popconfirm,
+  Popover,
+  Row,
+  Select,
+  Space,
+} from "antd";
+import React, { useState } from "react";
 import { Table } from "antd";
+import "./product.css";
+import Search from "antd/es/input/Search";
+import {
+  FilterFilled,
+  MoreOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
+import { Option } from "antd/es/mentions";
+import { useNavigate, useParams } from "react-router-dom";
 
-function Product() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef: any = React.useRef();
+const Product = () => {
+  const [open, setOpen] = useState(false);
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
+  const navigate = useNavigate();
+  const { uId } = useParams();
 
+  const popoverContent = (e: any) => {
+    return (
+      <>
+        <Space direction="vertical">
+          <Button
+            type="primary"
+            onClick={() => {
+              const { ...rest } = e;
+              navigate(`/panel/${uId}/product/editproduct`, {
+                state: { path: "product/editproduct", pre_editdata: { rest } },
+              });
+            }}
+          >
+            Edit
+          </Button>
+          <Popconfirm
+            title="Are you sure to delete this product?"
+            description="delete the product"
+            placement="bottomRight"
+            okText="delete"
+            okType="danger"
+            icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+            onConfirm={() => console.log("yes....")}
+            onCancel={() => console.log("no....")}
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
+        </Space>
+      </>
+    );
+  };
+
+  const createPopover = (e: any) => {
+    return (
+      <>
+        <Popover trigger={"hover"} content={popoverContent(e)} placement="left">
+          <Button icon={<MoreOutlined />} />
+        </Popover>
+      </>
+    );
+  };
+  const columns: any = [
+    {
+      title: "Title",
+      width: 100,
+      dataIndex: "title",
+      key: "title",
+      fixed: "left",
+    },
+    {
+      title: "Image",
+      width: 150,
+      dataIndex: "image",
+      key: "image",
+      fixed: "left",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      width: 100,
+    },
+    {
+      title: "Discount Price",
+      dataIndex: "discount_price",
+      key: "discount_price",
+      width: 100,
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      key: "brand",
+      width: 100,
+    },
+    {
+      title: "Rating",
+      dataIndex: "rating",
+      key: "rating",
+      width: 100,
+    },
+    {
+      title: "Qunatity",
+      dataIndex: "quantity",
+      key: "quantity",
+      width: 100,
+    },
+
+    {
+      title: "Action",
+      key: "operation",
+      fixed: "right",
+      width: 100,
+      render: (e: any) => createPopover(e),
+    },
+  ];
+  const data = [];
+  for (let i = 0; i < 100; i++) {
+    data.push({
+      key: i,
+      title: `title ${i}`,
+      image: `image ${i}`,
+      price: `price ${i}`,
+      discount_price: `discount_price ${i}`,
+      brand: `brand ${i}`,
+      rating: `rating ${i}`,
+      quantity: `quantity ${i}`,
+    });
+  }
   return (
     <>
-      <Box m={6}>
-        <Card pos={"sticky"} top={"14"} zIndex={"sticky"}>
-          <Flex justify="space-between" alignItems={"center"} p={2}>
-            <HStack spacing={10} mt={0} mr={10}>
-              <Box>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<FaSearch />}
-                  />
-                  <Input
-                    placeholder="Search by brand and title"
-                    htmlSize={26}
-                    width={"auto"}
-                  />
-                </InputGroup>
-              </Box>
-
-              {/* more filter  */}
-              <Box>
-                <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-                  More Filter
-                </Button>
-              </Box>
-              {/* more filter drawer  */}
-              <Drawer
-                isOpen={isOpen}
-                placement="right"
-                onClose={onClose}
-                finalFocusRef={btnRef}
-              >
-                <DrawerOverlay />
-                <DrawerContent>
-                  <DrawerCloseButton />
-                  <DrawerHeader>More Filter</DrawerHeader>
-
-                  <DrawerBody>
-                    <Stack spacing={4}>
-                      <Input placeholder="Enter Brand" />
-                      <Input placeholder="Enter Tittle" />
-                      <Input placeholder="Enter Category" />
-                    </Stack>
-                  </DrawerBody>
-
-                  <Flex justifyContent={"space-between"} m={4}>
-                    <Button mr={3} onClick={onClose} colorScheme="orange">
-                      Reset
-                    </Button>
-                    <Button colorScheme="blue">Apply</Button>
-                  </Flex>
-                </DrawerContent>
-              </Drawer>
-            </HStack>
-            <Button colorScheme="blue">Create Product</Button>
-          </Flex>
-        </Card>
-        {/* product info grid  */}
-        <Card mt={6}>
-          <HStack>
-            <Table
-              style={{ width: "100%", margin: "auto" }}
-              columns={[
-                {
-                  title: "Name",
-                  dataIndex: "name",
-                },
-                {
-                  title: "Age",
-                  dataIndex: "age",
-                },
-                {
-                  title: "Address",
-                  dataIndex: "address",
-                },
-                {
-                  title: "Address",
-                  dataIndex: "address",
-                },
-                {
-                  title: "Address",
-                  dataIndex: "address",
-                },
-                {
-                  title: "Address",
-                  dataIndex: "address",
-                },
-                {
-                  title: "Action",
-                  dataIndex: "address",
-                },
-              ]}
-              dataSource={[
-                {
-                  key: 1,
-                  name: `Edward King `,
-                  age: 32,
-                  address: `London, Park Lane no. `,
-                },
-                {
-                  key: 1,
-                  name: `Edward King `,
-                  age: 32,
-                  address: `London, Park Lane no. `,
-                },
-                {
-                  key: 2,
-                  name: ` King `,
-                  age: 32,
-                  address: `London, Park Lane no. `,
-                },
-                {
-                  key: 2,
-                  name: `Edward  `,
-                  age: 32,
-                  address: `London, Park Lane no. `,
-                },
-                {
-                  key: 2,
-                  name: `Edward  `,
-                  age: 32,
-                  address: `London, Park Lane no. `,
-                },
-                {
-                  key: 2,
-                  name: `Edward  `,
-                  age: 32,
-                  address: `London, Park Lane no. `,
-                },
-                {
-                  key: 2,
-                  name: `Edward  `,
-                  age: 32,
-                  address: `London, Park Lane no. `,
-                },
-                {
-                  key: 2,
-                  name: `Edward  `,
-                  age: 32,
-                  address: `London, Park Lane no. `,
-                },
-              ]}
+      <Space size={4} direction="vertical">
+        {/* produc search and filter  */}
+        <Card>
+          <Space direction="horizontal">
+            <Search
+              placeholder="Search by Title or Brand"
+              allowClear
+              enterButton="Search"
+              size="large"
+              // onSearch={onSearch}
             />
-          </HStack>
+            <Button type="primary" onClick={showDrawer} icon={<FilterFilled />}>
+              More Filter
+            </Button>
+            {/* more filter drawer  */}
+            <Drawer
+              title="More filter"
+              width={400}
+              onClose={onClose}
+              open={open}
+              bodyStyle={{
+                paddingBottom: 80,
+              }}
+              extra={
+                <Space>
+                  <Button onClick={onClose}>Reset</Button>
+                  <Button onClick={onClose} type="primary">
+                    Apply
+                  </Button>
+                </Space>
+              }
+            >
+              <Form layout="vertical">
+                <Row gutter={16}>
+                  <Col>
+                    <Form.Item
+                      name="name"
+                      label="Name"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Please enter user name" />
+                    </Form.Item>
+                    <Form.Item
+                      name="Select steps"
+                      label="Select steps"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <Select placeholder="Please select steps">
+                        <Option value="1">1</Option>
+                        <Option value="2">2</Option>
+                      </Select>
+                    </Form.Item>
+                    <Form.Item
+                      name="Date"
+                      label="Date"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <DatePicker.RangePicker
+                        style={{
+                          width: "100%",
+                        }}
+                        // getPopupContainer={(trigger) => trigger.parentElement}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
+            </Drawer>
+            <Button
+              type="primary"
+              onClick={() =>
+                navigate("/panel/123/product/createproduct", {
+                  state: { path: "dashboard/createproduct" },
+                })
+              }
+            >
+              Create product
+            </Button>
+          </Space>
         </Card>
-      </Box>
+
+        {/* prouduct grid  */}
+        <Card>
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{
+              y: 400,
+              x: 300,
+            }}
+          />
+        </Card>
+      </Space>
     </>
   );
-}
+};
 
 export default Product;

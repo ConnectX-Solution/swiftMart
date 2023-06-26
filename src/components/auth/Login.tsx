@@ -1,119 +1,126 @@
-import { useState } from "react";
+import React, { useState } from "react";
+// import "./index.css";
+import {
+  EyeTwoTone,
+  EyeInvisibleOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Button, Card, Input, Space, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Flex,
-  Heading,
-  Input,
-  Button,
-  InputGroup,
-  Stack,
-  InputLeftElement,
-  chakra,
-  Box,
-  Link,
-  Avatar,
-  FormControl,
-  FormHelperText,
-  InputRightElement,
-} from "@chakra-ui/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
-
-const CFaUserAlt = chakra(FaUserAlt);
-const CFaLock = chakra(FaLock);
-
-type LoginI = {
-  email: string;
-  password: string;
-};
 const Login = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+  const [error, setError] = useState({
+    passworderr: false,
+    usernameerr: false,
+  });
+  const { passworderr, usernameerr } = error;
+  const { username, password } = user;
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleShowClick = () => setShowPassword(!showPassword);
+  // submit data function
+  function submitData() {
+    const user_id = 123;
+    navigate(`/panel/${user_id}/dashboard`);
+  }
   return (
-    <Flex
-      flexDirection="column"
-      width="100wh"
-      height="100vh"
-      backgroundColor="gray.200"
-      justifyContent="center"
-      alignItems="center"
+    <Card
+      title={"Login "}
+      style={{
+        width: "60%",
+        margin: "auto",
+        boxShadow: "2px 2px 2px 2px gray",
+      }}
     >
-      <Stack
-        flexDir="column"
-        mb="2"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Avatar bg="teal.500" />
-        <Heading as="h6" color="teal.400">
-          Welcome to eshop
-        </Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
-            <Stack
-              spacing={4}
-              p="1rem"
-              backgroundColor="whiteAlpha.900"
-              boxShadow="md"
-            >
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
-                  />
-                  <Input type="email" placeholder="email address" />
-                </InputGroup>
-              </FormControl>
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    color="gray.300"
-                    children={<CFaLock color="gray.300" />}
-                  />
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                  />
-                  <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                      {showPassword ? "Hide" : "Show"}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-                <FormHelperText textAlign="right">
-                  <Link>forgot password?</Link>
-                </FormHelperText>
-              </FormControl>
-              <Button
-                borderRadius={0}
-                type="submit"
-                variant="solid"
-                colorScheme="teal"
-                width="full"
-                onClick={() => navigate(`/panel/${123}/dashboard`)}
-              >
-                Login
-              </Button>
-            </Stack>
-          </form>
-        </Box>
-      </Stack>
-      <Box>
-        New to us?{" "}
+      <Space direction="vertical" style={{ width: "100%" }} size="middle">
+        <Input
+          status={usernameerr ? "error" : ""}
+          placeholder="Enter a username"
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          onChange={(e) => {
+            if (username.length === 0) {
+              setError({ ...error, usernameerr: true });
+            } else {
+              setError({ ...error, usernameerr: false });
+            }
+            setUser({ ...user, username: e.target.value });
+          }}
+          onBlur={() => {
+            if (username.length === 0) {
+              setError({
+                ...error,
+                usernameerr: true,
+              });
+            } else {
+              setError({
+                ...error,
+                usernameerr: false,
+              });
+            }
+          }}
+        />
+        <Input.Password
+          status={usernameerr ? "error" : ""}
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="input password"
+          iconRender={(visible) =>
+            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+          }
+          onBlur={() => {
+            if (password.length === 0) {
+              setError({
+                ...error,
+                passworderr: true,
+              });
+            } else {
+              setError({
+                ...error,
+                passworderr: false,
+              });
+            }
+          }}
+          onChange={(e) => {
+            if (password.length === 0) {
+              setError({ ...error, passworderr: true });
+            } else {
+              setError({ ...error, passworderr: false });
+            }
+            setUser({ ...user, password: e.target.value });
+          }}
+        />
         <Button
-          colorScheme="teal"
-          variant="link"
-          onClick={() => navigate("/auth/signup")}
+          type="link"
+          style={{
+            width: "100%",
+            textAlign: "right",
+          }}
+          onClick={() => {}}
         >
-          Sign Up
+          Forgot Password ?
         </Button>
-      </Box>
-    </Flex>
+        <Button
+          type="primary"
+          style={{
+            width: "100%",
+          }}
+          onClick={() => {
+            submitData();
+          }}
+        >
+          Login
+        </Button>
+        <Typography.Text type="secondary">
+          New to Us ?{" "}
+          <Typography.Link onClick={() => navigate("/auth/signup")}>
+            Register
+          </Typography.Link>
+        </Typography.Text>
+      </Space>
+    </Card>
   );
 };
-
 export default Login;
