@@ -152,7 +152,13 @@ function Product(_props: DIProps) {
       <div>
         <Box>
           <VStack spacing={"2"}>
-            <Button size="md" > Edit  </Button>
+            <Button size="md" onClick={() => {
+              navigate(`/panel/${uId}/product/product-edit`, {
+                state: {
+                  id: data._id
+                }
+              });
+            }} > Edit  </Button>
             <Button size="md" onClick={() => {
               setProductId(data._id);
               setModelOpen(true);
@@ -423,15 +429,19 @@ function Product(_props: DIProps) {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme='blue' isLoading={loading} mr={3} onClick={() => {
-                deleteProduct();
-                setModelOpen(false);
-              }}>
-                Save
-              </Button>
-              <Button onClick={() => {
-                setModelOpen(false);
-              }}>Cancel</Button>
+
+              <HStack spacing={4}>
+
+                <Button onClick={() => {
+                  setModelOpen(false);
+                }}>Cancel</Button>
+                <Button colorScheme='red' isLoading={loading} mr={3} onClick={() => {
+                  deleteProduct();
+                  setModelOpen(false);
+                }}>
+                  Delete Product
+                </Button>
+              </HStack>
             </ModalFooter>
           </ModalContent>
         </Modal>

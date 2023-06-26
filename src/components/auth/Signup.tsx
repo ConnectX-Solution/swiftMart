@@ -250,6 +250,7 @@ const Signup = (_props: DIProps) => {
                   {/* <Link>forgot password?</Link> */}
                 </FormHelperText>
               </FormControl>
+
               <Button
                 borderRadius={0}
                 variant="solid"
@@ -305,6 +306,7 @@ const Signup = (_props: DIProps) => {
           </form>
         </Box>
       </Stack>
+
       <Box>
         already Sign Up user?{" "}
         <Button colorScheme='teal' variant='link' onClick={() => navigate("/auth/login")}>

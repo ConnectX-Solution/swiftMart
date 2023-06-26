@@ -1,10 +1,13 @@
 import { Box, Button, Card, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Stack, useToast } from '@chakra-ui/react'
 import { Input } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DI, DIProps } from '../../../Core'
 
-function ProductCreate(_props: DIProps) {
+function ProductEdit(_props: DIProps) {
+    console.log("Props:", _props.location.state.id, "sami:", _props);
+
     const { POST, GET } = _props.di;
+
     const toast = useToast()
     const [productDetails, setProductDetails] = useState<any>({
         title: "",
@@ -30,6 +33,33 @@ function ProductCreate(_props: DIProps) {
         quantity: false
     })
     const [isLoading, setIsloading] = useState(false);
+    const GetProduct = () => {
+        POST("getSingleProduct", {
+            id: _props.location.state.id
+        }).then((e: any) => {
+            if (e.success) {
+                setProductDetails((prev: any) => {
+                    return {
+                        ...prev, title: e.data.title,
+                        Additional_Image: e.data.Additional_Image,
+                        brand: e.data.brand,
+                        category: e.data.category,
+                        description: e.data.description,
+                        rating: e.data.rating,
+                        price: e.data.price,
+                        discountPrice: e.data.discountPrice,
+                        quantity: e.data.quantity
+                    }
+                })
+
+            }
+        })
+
+    }
+    useEffect(() => {
+        GetProduct()
+    }, [])
+
     const SaveProduct = () => {
         let isValid = false;
         Object.keys(productDetails).forEach((e: any) => {
@@ -39,7 +69,9 @@ function ProductCreate(_props: DIProps) {
         })
         if (!isValid) {
             setIsloading(true);
-            POST("createProduct", productDetails).then((e: any) => {
+            const ProductData = productDetails;
+            ProductData.id = _props.location.state.id;
+            POST("editProduct", productDetails).then((e: any) => {
                 if (e.success) {
                     toast({
                         title: e.message,
@@ -78,6 +110,7 @@ function ProductCreate(_props: DIProps) {
                                 <FormControl isInvalid={productDetailsErroe.title}  >
                                     <FormLabel>Title</FormLabel>
                                     <Input type='text'
+                                        value={productDetails.title}
                                         onChange={(e: any) => {
                                             if (e.target.value !== "") {
                                                 setProductDetailsError((prev: any) => {
@@ -111,6 +144,7 @@ function ProductCreate(_props: DIProps) {
                                 <FormControl isInvalid={productDetailsErroe.Additional_Image}>
                                     <FormLabel>Image</FormLabel>
                                     <Input type='text'
+                                        value={productDetails.Additional_Image}
                                         onChange={(e: any) => {
                                             if (e.target.value !== "") {
                                                 setProductDetailsError((prev: any) => {
@@ -144,6 +178,7 @@ function ProductCreate(_props: DIProps) {
                                 <FormControl isInvalid={productDetailsErroe.category}>
                                     <FormLabel>Category</FormLabel>
                                     <Input type='text'
+                                        value={productDetails.category}
                                         onChange={(e: any) => {
                                             if (e.target.value !== "") {
                                                 setProductDetailsError((prev: any) => {
@@ -177,6 +212,7 @@ function ProductCreate(_props: DIProps) {
                                 <FormControl isInvalid={productDetailsErroe.brand}>
                                     <FormLabel>Brand</FormLabel>
                                     <Input type='text'
+                                        value={productDetails.brand}
                                         onChange={(e: any) => {
                                             if (e.target.value !== "") {
                                                 setProductDetailsError((prev: any) => {
@@ -210,6 +246,7 @@ function ProductCreate(_props: DIProps) {
                                 <FormControl isInvalid={productDetailsErroe.description}>
                                     <FormLabel>Description</FormLabel>
                                     <Input type='text'
+                                        value={productDetails.description}
                                         onChange={(e: any) => {
                                             if (e.target.value !== "") {
                                                 setProductDetailsError((prev: any) => {
@@ -244,6 +281,7 @@ function ProductCreate(_props: DIProps) {
                                 <FormControl isInvalid={productDetailsErroe.rating}>
                                     <FormLabel>Rating</FormLabel>
                                     <Input type='text'
+                                        value={productDetails.rating}
                                         onChange={(e: any) => {
                                             if (e.target.value !== "") {
                                                 setProductDetailsError((prev: any) => {
@@ -278,6 +316,7 @@ function ProductCreate(_props: DIProps) {
                                 <FormControl isInvalid={productDetailsErroe.price}>
                                     <FormLabel>Price</FormLabel>
                                     <Input type='text'
+                                        value={productDetails.price}
                                         onChange={(e: any) => {
                                             if (e.target.value !== "") {
                                                 setProductDetailsError((prev: any) => {
@@ -312,6 +351,7 @@ function ProductCreate(_props: DIProps) {
                                 <FormControl isInvalid={productDetailsErroe.discountPrice}>
                                     <FormLabel>Discount Price</FormLabel>
                                     <Input type='text'
+                                        value={productDetails.discountPrice}
                                         onChange={(e: any) => {
                                             if (e.target.value !== "") {
 
@@ -346,6 +386,7 @@ function ProductCreate(_props: DIProps) {
                                 <FormControl isInvalid={productDetailsErroe.quantity}>
                                     <FormLabel>Quantity</FormLabel>
                                     <Input type='text'
+                                        value={productDetails.quantity}
                                         onChange={(e: any) => {
                                             if (e.target.value !== "") {
                                                 setProductDetailsError((prev: any) => {
@@ -422,4 +463,4 @@ function ProductCreate(_props: DIProps) {
     )
 }
 
-export default DI(ProductCreate)
+export default DI(ProductEdit)

@@ -16,6 +16,7 @@ import Dashboard from "./Dashboards/Dashboard";
 import Product from "./Products/Product";
 import Order from "./Orders/Order";
 import ProductCreate from "./Products/ProductCreate";
+import ProductEdit from "./Products/ProductEdit";
 export interface PanelProps extends DIProps {
   name?: string;
   syncNecessaryInfo: () => void;
@@ -70,7 +71,7 @@ function Panel(props: PanelProps): JSX.Element {
             />
             <Route
               path="product/product-edit"
-              element={<h1>Product-edit</h1>}
+              element={<ProductEdit />}
             />
             <Route path="order/*" element={<Order />} />
             <Route path="order/order-view" element={<h1>Order view</h1>} />

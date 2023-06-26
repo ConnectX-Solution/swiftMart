@@ -35,7 +35,7 @@ import { FaUserAlt, FaLock } from "react-icons/fa";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
 export default function PanelHeader(props: any) {
-  const { uId } = useParams();
+  const { uId, } = useParams();
 
   const navigate = useNavigate();
   const sidebar = useDisclosure();
@@ -153,6 +153,8 @@ export default function PanelHeader(props: any) {
       </Flex>
     </Box>
   );
+  console.log("props samiaa:", useParams()["*"]);
+
 
   return (
     <Box
@@ -224,13 +226,35 @@ export default function PanelHeader(props: any) {
             mt={2}
           >
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">E-shop</BreadcrumbLink>
+              <BreadcrumbLink
+                onClick={(e: any) => {
+                  navigate(`/panel/${uId}/dashboard`, {
+                    state: { key: "Dashboard" },
+                  });
+
+                }}>E-shop</BreadcrumbLink>
             </BreadcrumbItem>
+
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">
-                {state !== null ? state.key : "Dashboard"}
+              <BreadcrumbLink onClick={() => {
+                navigate(`/panel/${uId}/${useParams()["*"]?.split("/")[0].trim()}`);
+
+              }} >
+                {useParams()["*"]?.split("/")[0]}
               </BreadcrumbLink>
             </BreadcrumbItem>
+            {
+              useParams()["*"]?.split("/")[1] && (<>
+                <BreadcrumbItem>
+                  <BreadcrumbLink onClick={() => {
+                    navigate(`/panel/${uId}/${useParams()["*"]?.split("/")[1]}`,);
+
+                  }} >
+                    {useParams()["*"]?.split("/")[1]}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              </>)
+            }
           </Breadcrumb>
         </Box>
 
