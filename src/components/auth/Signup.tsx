@@ -1,160 +1,113 @@
+import React, { useState } from "react";
+// import "./index.css";
 import {
-  Flex,
-  Heading,
-  Input,
-  Button,
-  InputGroup,
-  Stack,
-  InputLeftElement,
-  chakra,
-  Box,
-  Link,
-  Avatar,
-  FormControl,
-  FormHelperText,
-  InputRightElement
-} from "@chakra-ui/react";
-import { useState } from "react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
+  EyeTwoTone,
+  EyeInvisibleOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Button, Card, Input, Space, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
-const CFaUserAlt = chakra(FaUserAlt);
-const CFaLock = chakra(FaLock);
-interface SignupI {
-  fname: string;
-  lname: string;
-  username: string;
-  email: string;
-  password: string;
-  cnfpassword: string;
-}
 const Signup = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+  const [error, setError] = useState({
+    passworderr: false,
+    usernameerr: false,
+  });
+  const { passworderr, usernameerr } = error;
+  const { username, password } = user;
   const navigate = useNavigate();
-
-  const [showPassword, setShowPassword] = useState(false);
-  const handleShowClick = () => setShowPassword(!showPassword);
   return (
-    <Flex
-      flexDirection="column"
-      width="100wh"
-      height="100vh"
-      backgroundColor="gray.200"
-      justifyContent="center"
-      alignItems="center"
+    <Card
+      title={"Signup "}
+      style={{
+        width: "60%",
+        margin: "auto",
+        boxShadow: "2px 2px 2px 2px gray",
+      }}
     >
-      <Stack
-        flexDir="column"
-        mb="2"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Avatar bg="teal.500" />
-        <Heading color="teal.400">Welcome</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
-            <Stack
-              spacing={4}
-              p="1rem"
-              backgroundColor="whiteAlpha.900"
-              boxShadow="md"
-            >
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
-                  />
-                  <Input type="fname" placeholder="First Name" />
-                </InputGroup>
-              </FormControl>
-
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
-                  />
-                  <Input type="lname" placeholder="Last Name" />
-                </InputGroup>
-              </FormControl>
-
-
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
-                  />
-                  <Input type="username" placeholder="User Name" />
-                </InputGroup>
-              </FormControl>
-
-
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
-                  />
-                  <Input type="email" placeholder="email address" />
-                </InputGroup>
-              </FormControl>
-
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
-                  />
-                  <Input type="number" placeholder="Mobile number" />
-                </InputGroup>
-              </FormControl>
-
-
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    color="gray.300"
-                    children={<CFaLock color="gray.300" />}
-                  />
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                  />
-                  <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                      {showPassword ? "Hide" : "Show"}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-                <FormHelperText textAlign="right">
-                  <Link>forgot password?</Link>
-                </FormHelperText>
-              </FormControl>
-
-              <Button
-                borderRadius={0}
-                type="submit"
-                variant="solid"
-                colorScheme="teal"
-                width="full"
-              >
-                Sign Up
-              </Button>
-            </Stack>
-          </form>
-        </Box>
-      </Stack>
-      <Box>
-        already Sign Up user?{" "}
-        <Button colorScheme='teal' variant='link' onClick={() => navigate("/auth/login")}>
-          Login
+      <Space direction="vertical" style={{ width: "100%" }} size="middle">
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Enter First Name"
+        />
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Enter Last Name"
+        />
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Enter Username"
+        />
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Enter Email address"
+        />
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Enter Mobile number"
+        />
+        <Input.Password
+          status={usernameerr ? "error" : ""}
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Enter Password"
+          iconRender={(visible) =>
+            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+          }
+          onBlur={() => {
+            if (password.length === 0) {
+              setError({
+                ...error,
+                passworderr: true,
+              });
+            } else {
+              setError({
+                ...error,
+                passworderr: false,
+              });
+            }
+          }}
+          onChange={(e) => {
+            if (password.length === 0) {
+              setError({ ...error, passworderr: true });
+            } else {
+              setError({ ...error, passworderr: false });
+            }
+            setUser({ ...user, password: e.target.value });
+          }}
+        />
+        <Button
+          type="link"
+          style={{
+            width: "100%",
+            textAlign: "right",
+          }}
+          onClick={() => {}}
+        >
+          Forgot Password ?
         </Button>
-      </Box>
-    </Flex>
-
+        <Button
+          type="primary"
+          style={{
+            width: "100%",
+          }}
+          onClick={() => {}}
+        >
+          Signup
+        </Button>
+        <Typography.Text type="secondary">
+          Already a User ?{" "}
+          <Typography.Link onClick={() => navigate("/auth/login")}>
+            {" "}
+            Login{" "}
+          </Typography.Link>
+        </Typography.Text>
+      </Space>
+    </Card>
   );
 };
-
 export default Signup;

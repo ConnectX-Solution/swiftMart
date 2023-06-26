@@ -1,56 +1,27 @@
-// Chakra imports
-import { ChevronRightIcon } from "@chakra-ui/icons";
-import {
-  Card,
-  CardHeader,
-  Heading,
-  CardBody,
-  Text,
-  CardFooter,
-  Button,
-  Flex,
-  Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-} from "@chakra-ui/react";
-
+import { Card, Col, Row, Typography } from "antd";
 import React from "react";
-import { useLocation } from "react-router-dom";
-function Dashboard(_props: any) {
-  const { state } = useLocation();
+
+const Dashboard = () => {
   return (
     <>
-      <Flex justifyContent={"space-evenly"} p="3">
-        <Box
-          width="container.md"
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-          p={2}
-          m={4}
-        >
-          <Heading as="h2" size="md" mb={2}>
-            Product Details
-          </Heading>
-          <Text fontSize="md">Total Produt: 50</Text>
-        </Box>
-
-        <Box
-          width="container.md"
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-          p={2}
-          m={4}
-        >
-          <Heading as="h2" size="md" mb={2}>
-            Order Details
-          </Heading>
-          <Text fontSize="md">Total Order: 23</Text>
-        </Box>
-      </Flex>
+      <div>
+        <Card>
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Col className="gutter-row" span={12}>
+              <Card title="Product Details:" style={{ width: "80%" }}>
+                <Typography.Text strong> Total products: 55</Typography.Text>
+              </Card>
+            </Col>
+            <Col className="gutter-row" span={12}>
+              <Card title="Order Details:" style={{ width: "80%" }}>
+                <Typography.Text strong> Total orders: 55</Typography.Text>
+              </Card>
+            </Col>
+          </Row>
+        </Card>
+      </div>
     </>
   );
-}
+};
+
 export default Dashboard;

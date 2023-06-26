@@ -1,11 +1,11 @@
 /* comman css */
-.pb-100 {
+/* .pb-100 {
   padding-bottom: 100px !important;
-}
-
+} */
+/* 
 .pt-100 {
   padding-top: 100px !important;
-}
+} */
 
 .custom-hr {
   border: none;
@@ -68,7 +68,7 @@
 }
 /* onboarding css */
 .ced-onboarding__wrap .inte__Topbar {
-  padding-left: 3rem;
+  /* padding-left: 3rem; */
 }
 /* error page hide */
 .ced-errorpage__hidebutton .inte-btn:empty {
@@ -100,14 +100,14 @@
 
 /* Style the header */
 .header {
-  padding: 10px 16px;
+  /* padding: 10px 16px; */
   background: #555;
   color: #f1f1f1;
 }
 
 /* Page content */
 .content {
-  padding: 16px;
+  /* padding: 16px; */
 }
 
 /* The sticky class is added to the header with JS when it reaches its scroll position */

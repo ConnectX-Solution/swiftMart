@@ -4,14 +4,17 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import { ChakraProvider } from "@chakra-ui/react";
-import "./App.css";
+// import "./App.css";
+
+// primeflex css
+// import "primeflex/primeflex.scss";
+
 //theme
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 //core
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
+// import "primereact/resources/primereact.min.css";
+// import "primeicons/primeicons.css";
 
 import { store } from "./Reducers";
 
@@ -26,15 +29,10 @@ root.render(
   <StrictMode>
     <BrowserRouter basename={process.env.route ?? ""}>
       <PersistGate loading={null} persistor={persistor}>
-        0
         <Provider store={store}>
-          {/* <StoreDispatcher.Provider value={store.dispatch}> */}
           <Suspense fallback={<>Loading...</>}>
-            <ChakraProvider>
-              <App />
-            </ChakraProvider>
+            <App />
           </Suspense>
-          {/* </StoreDispatcher.Provider> */}
         </Provider>
       </PersistGate>
     </BrowserRouter>
