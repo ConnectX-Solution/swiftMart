@@ -1,5 +1,4 @@
 import { Button, Card, Form, Input } from "antd";
-import { title } from "process";
 import React, { useState } from "react";
 
 const CreateProduct = () => {
@@ -27,7 +26,63 @@ const CreateProduct = () => {
     description,
   } = user;
 
-  console.log("user:", user);
+  const formData = [
+    {
+      label: "Title",
+      value: title,
+      placeHolder: "Enter Product's Title",
+      key: `title`,
+    },
+    {
+      label: "Image",
+      value: image,
+      placeHolder: "Upload an Image",
+      key: `image`,
+    },
+    {
+      label: "Quantity",
+      value: quantity,
+      placeHolder: "Enter Product's Quantity",
+      key: `quantity`,
+    },
+    {
+      label: "Price",
+      value: price,
+      placeHolder: "Enter Product's Price",
+      key: `price`,
+    },
+    {
+      label: "Discount Price",
+      value: discount_price,
+      placeHolder: "Enter Product's Discount Price",
+      key: `discount_price`,
+    },
+    {
+      label: "Category",
+      value: category,
+      placeHolder: "Enter Product's Category",
+      key: `category`,
+    },
+    {
+      label: "Brand",
+      value: brand,
+      placeHolder: "Enter Product's Brand",
+      key: `brand`,
+    },
+    {
+      label: "Description",
+      value: description,
+      placeHolder: "Enter Product's Description",
+      key: `description`,
+    },
+    {
+      label: "Rating",
+      value: rating,
+      placeHolder: "Enter Product's Rating",
+      key: `rating`,
+    },
+  ];
+
   return (
     <>
       <Card
@@ -46,7 +101,25 @@ const CreateProduct = () => {
           wrapperCol={{ span: 14 }}
           layout="vertical"
         >
-          <Form.Item label="Title" rules={[{ required: true }]}>
+          {formData.map((dataItem: any, index: number) => {
+            return (
+              <Form.Item
+                label={dataItem.label}
+                rules={[{ required: true }]}
+                key={index}
+              >
+                <Input
+                  value={dataItem.value}
+                  onChange={(e: any) =>
+                    setUser({ ...user, [dataItem.key]: e.target.value })
+                  }
+                  placeholder={dataItem.placeHolder}
+                />
+              </Form.Item>
+            );
+          })}
+
+          {/* <Form.Item label="Title" rules={[{ required: true }]}>
             <Input
               value={title}
               onChange={(e: any) => setUser({ ...user, title: e })}
@@ -108,7 +181,7 @@ const CreateProduct = () => {
               onChange={(e: any) => setUser({ ...user, rating: e })}
               placeholder="Enter product's rating"
             />
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       </Card>
     </>
