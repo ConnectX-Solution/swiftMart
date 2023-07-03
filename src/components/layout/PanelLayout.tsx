@@ -1,4 +1,5 @@
 import {
+  EllipsisOutlined,
   HomeFilled,
   LogoutOutlined,
   MenuFoldOutlined,

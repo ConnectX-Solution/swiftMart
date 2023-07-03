@@ -17,6 +17,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 // import "primeicons/primeicons.css";
 
 import { store } from "./Reducers";
+import { ConfigProvider } from "antd";
 
 export const StoreDispatcher = React.createContext(store.dispatch);
 
@@ -31,7 +32,15 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <Provider store={store}>
           <Suspense fallback={<>Loading...</>}>
-            <App />
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: "indigo",
+                },
+              }}
+            >
+              <App />
+            </ConfigProvider>
           </Suspense>
         </Provider>
       </PersistGate>

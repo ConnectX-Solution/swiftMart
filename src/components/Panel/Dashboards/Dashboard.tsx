@@ -6,7 +6,7 @@ const Dashboard = () => {
     <>
       <div>
         <Card>
-          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} wrap>
             <Col className="gutter-row" span={12}>
               <Card title="Product Details:" style={{ width: "80%" }}>
                 <Typography.Text strong> Total products: 55</Typography.Text>
